@@ -99,6 +99,10 @@
   align-items: center;
 }
 
+.orders-page .order-item-row {
+  display: contents;
+}
+
 @media (max-width: 800px) {
   .orders-page .order-details-grid {
     grid-template-columns: 110px 1fr;
