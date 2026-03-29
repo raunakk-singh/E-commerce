@@ -1,5 +1,10 @@
-export function PaymentSummary({paymentSummary}){
-  return(
+import axios from 'axios';
+import { useNavigate } from 'react-router';
+
+export function PaymentSummary({ paymentSummary, setCart }) {
+  const navigate = useNavigate();
+
+  return (
     <>
       {paymentSummary && (
             <div className="payment-summary">
@@ -42,7 +47,15 @@ export function PaymentSummary({paymentSummary}){
                 </div>
               </div>
 
-              <button className="place-order-button button-primary">
+              <button className="place-order-button button-primary" onClick={async () => {
+                try {
+                  await axios.post('/api/orders');
+                  setCart([]);
+                  navigate('/orders');
+                } catch (error) {
+                  console.error('Error placing order:', error);
+                }
+              }}>
                 Place your order
               </button>
             </div>

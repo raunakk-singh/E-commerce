@@ -1,6 +1,8 @@
 import { DeliveryOptions } from "./deliveryOptions";
 import dayjs from "dayjs";
-export function OrderSummary({ cart, deliveryOptions, setCart }) {
+import axios from "axios";
+
+export function OrderSummary({ cart, deliveryOptions, setCart, loadCart, fetchCheckoutData }) {
   return(
     <>
     <div className="order-summary">
@@ -30,15 +32,34 @@ export function OrderSummary({ cart, deliveryOptions, setCart }) {
                         <span>
                           Quantity: <span className="quantity-label">{cartItem.quantity}</span>
                         </span>
-                        <span className="update-quantity-link link-primary">
+                        <span className="update-quantity-link link-primary" onClick={async () => {
+                          const qty = prompt("Enter new quantity:", cartItem.quantity);
+                          const parsed = parseInt(qty);
+                          if (!isNaN(parsed) && parsed >= 0 && parsed !== cartItem.quantity) {
+                            if (parsed === 0) {
+                              await axios.delete(`/api/cart-items/${cartItem.productId}`);
+                            } else {
+                              await axios.put(`/api/cart-items/${cartItem.productId}`, {
+                                quantity: parsed,
+                                deliveryOptionId: cartItem.deliveryOptionId
+                              });
+                            }
+                            await loadCart();
+                            await fetchCheckoutData();
+                          }
+                        }}>
                           Update
                         </span>
-                        <span className="delete-quantity-link link-primary">
+                        <span className="delete-quantity-link link-primary" onClick={async () => {
+                          await axios.delete(`/api/cart-items/${cartItem.productId}`);
+                          await loadCart();
+                          await fetchCheckoutData();
+                        }}>
                           Delete
                         </span>
                       </div>
                     </div>
-                <DeliveryOptions deliveryOptions={deliveryOptions} cartItem={cartItem} setCart={setCart} />
+                <DeliveryOptions deliveryOptions={deliveryOptions} cartItem={cartItem} setCart={setCart} loadCart={loadCart} fetchCheckoutData={fetchCheckoutData} />
                   </div>
                 </div>
               );
