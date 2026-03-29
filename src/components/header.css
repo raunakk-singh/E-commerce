@@ -71,6 +71,8 @@
   flex: 1;
   width: 0;
   font-size: 16px;
+  color: black;
+  background-color: white;
   height: 38px;
   padding-left: 15px;
   border: none;

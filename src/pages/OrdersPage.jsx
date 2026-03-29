@@ -1,9 +1,10 @@
-import { useEffect } from 'react';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import dayjs from 'dayjs';
 import { Link } from 'react-router';
 import './OrdersPage.css';
 import '../components/header.css';
-import {Header} from '../components/Header';
-
+import { Header } from '../components/Header';
 const orders = [
   {
     id: '27cba69d-4c3d-4098-b42d-ac7fa62b7664',
@@ -39,14 +40,19 @@ const orders = [
   },
 ];
 
-export default function OrdersPage() {
-  useEffect(() => {
-    document.title = 'Orders';
+export default function OrdersPage({cart}) {
+  const [orders,setOrders]=useState([]);
+
+  useEffect(()=>{
+    axios.get('/api/orders?expand=products')
+    .then((response)=>{
+      setOrders(response.data);
+    });
   }, []);
 
   return (
     <>
-      <Header/>
+      <Header cart={cart}/>
 
       <div className="orders-page">
         <div className="page-title">Your Orders</div>
@@ -58,11 +64,11 @@ export default function OrdersPage() {
                 <div className="order-header-left-section">
                   <div className="order-date">
                     <div className="order-header-label">Order Placed:</div>
-                    <div>{order.placed}</div>
+                    <div>{dayjs(order.orderTimesMs).format('MMMM D')}</div>
                   </div>
                   <div className="order-total">
                     <div className="order-header-label">Total:</div>
-                    <div>{order.total}</div>
+                    <div>${(order.totalCostCents / 100).toFixed(2)}</div>
                   </div>
                 </div>
 
@@ -73,18 +79,18 @@ export default function OrdersPage() {
               </div>
 
               <div className="order-details-grid">
-                {order.items.map((item) => (
-                  <div className="order-item-row" key={`${order.id}-${item.name}`}>
+                {order.products.map((orderProduct) => (
+                  <div className="order-item-row" key={orderProduct.product.id}>
                     <div className="product-image-container">
-                      <img src={item.image} alt={item.name} />
+                      <img src={orderProduct.product.image} alt={orderProduct.product.name} />
                     </div>
 
                     <div className="product-details">
-                      <div className="product-name">{item.name}</div>
+                      <div className="product-name">{orderProduct.product.name}</div>
                       <div className="product-delivery-date">
-                        Arriving on: {item.deliveryDate}
+                        Arriving on: {dayjs(orderProduct.estimatedDeliveryTimeMs).format('MMMM D')}
                       </div>
-                      <div className="product-quantity">Quantity: {item.quantity}</div>
+                      <div className="product-quantity">Quantity: {orderProduct.quantity}</div>
                       <button className="buy-again-button button-primary">
                         <img
                           className="buy-again-icon"
