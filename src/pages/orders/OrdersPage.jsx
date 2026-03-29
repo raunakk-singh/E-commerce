@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import { Link } from 'react-router';
 import './OrdersPage.css';
-import '../components/header.css';
-import { Header } from '../components/Header';
+import '../../components/header.css';
+import { Header } from '../../components/Header';
 const orders = [
   {
     id: '27cba69d-4c3d-4098-b42d-ac7fa62b7664',
@@ -44,10 +44,11 @@ export default function OrdersPage({cart}) {
   const [orders,setOrders]=useState([]);
 
   useEffect(()=>{
-    axios.get('/api/orders?expand=products')
-    .then((response)=>{
+    const fetchOrdersData=async ()=>{
+      const response=await axios.get('/api/orders?expand=products');
       setOrders(response.data);
-    });
+    };
+    fetchOrdersData();
   }, []);
 
   return (
