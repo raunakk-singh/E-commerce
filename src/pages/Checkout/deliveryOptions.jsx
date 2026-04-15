@@ -1,5 +1,5 @@
-import dayjs from "dayjs";
-import axios from "axios";
+import dayjs from 'dayjs';
+import { api } from '../../lib/api';
 
 export function DeliveryOptions({ deliveryOptions, cartItem, setCart, loadCart, fetchCheckoutData }) {
   return (
@@ -16,7 +16,7 @@ export function DeliveryOptions({ deliveryOptions, cartItem, setCart, loadCart, 
 
 
         const updateDeliveryOption = async () => {
-          await axios.put(`/api/cart-items/${cartItem.productId}`,{
+          await api.put(`/api/cart-items/${cartItem.productId}`,{
            deliveryOptionId: deliveryOption.id });
           await loadCart();
           await fetchCheckoutData();

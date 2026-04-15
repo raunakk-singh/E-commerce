@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router';
+import { getImageUrl } from '../lib/api';
 import './header.css';
 
 export function Header({cart = []}) {
@@ -43,7 +44,7 @@ export function Header({cart = []}) {
           />
 
           <button className="search-button" type="submit">
-            <img className="search-icon" src="images/icons/search-icon.png" />
+            <img className="search-icon" src={getImageUrl('images/icons/search-icon.png')} />
           </button>
         </form>
 
@@ -53,7 +54,7 @@ export function Header({cart = []}) {
           </Link>
 
           <Link className="cart-link header-link" to="/checkout">
-            <img className="cart-icon" src="images/icons/cart-icon.png" />
+            <img className="cart-icon" src={getImageUrl('images/icons/cart-icon.png')} />
             <div className="cart-quantity">{totalQuantity}</div>
             <div className="cart-text">Cart</div>
           </Link>

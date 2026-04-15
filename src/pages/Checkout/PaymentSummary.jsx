@@ -1,5 +1,5 @@
-import axios from 'axios';
 import { useNavigate } from 'react-router';
+import { api } from '../../lib/api';
 
 export function PaymentSummary({ paymentSummary, setCart }) {
   const navigate = useNavigate();
@@ -49,7 +49,7 @@ export function PaymentSummary({ paymentSummary, setCart }) {
 
               <button className="place-order-button button-primary" onClick={async () => {
                 try {
-                  await axios.post('/api/orders');
+                  await api.post('/api/orders');
                   setCart([]);
                   navigate('/orders');
                 } catch (error) {
