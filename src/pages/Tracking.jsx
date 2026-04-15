@@ -1,7 +1,6 @@
 import { Link } from 'react-router';
 import './Tracking.css';
 import {Header} from '../components/Header';
-import { getImageUrl } from '../lib/api';
 
 export function Tracking() {
   return (
@@ -29,7 +28,7 @@ export function Tracking() {
 
           <img
             className="product-image"
-            src={getImageUrl('images/products/athletic-cotton-socks-6-pairs.jpg')}
+            src="images/products/athletic-cotton-socks-6-pairs.jpg"
             alt="Black and Gray Athletic Cotton Socks - 6 Pairs"
           />
 

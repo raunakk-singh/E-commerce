@@ -3,19 +3,27 @@ import { HomePage } from './pages/home/HomePage';
 import { CheckoutPage } from './pages/Checkout/CheckoutPage';
 import OrdersPage from './pages/orders/OrdersPage';
 import { Tracking } from './pages/Tracking';
+import axios from 'axios';
 import { useState, useEffect } from 'react';
 import './App.css'
-import { api } from './lib/api';
+import { use } from 'react';
+
+
+
+
 
 function App() {
   const [cart, setCart] = useState([]);
 
-  const loadCart = async () => {
-    const response = await api.get('/api/cart-items?expand=product');
-    setCart(response.data);
-  };
+   const loadCart = async () => {
+      const response = await axios.get('/api/cart-items?expand=product');
+      setCart(response.data);
+    };
+
+
 
   useEffect(() => {
+   
     loadCart();
   }, []);
 
@@ -26,6 +34,8 @@ function App() {
       <Route path="orders" element={<OrdersPage cart={cart} />}></Route>
       <Route path="tracking" element={<Tracking />}></Route>
     </Routes>
+
+
   )
 }
 

@@ -1,11 +1,12 @@
-import { useState } from 'react';
-import { api, getImageUrl } from '../../lib/api';
+import { useState } from "react";
+import axios from "axios";
+
 
 export function Product({ product, loadCart }) {
   const [quantity, setQuantity] = useState(1);
 
   const addToCart = async () => {
-    await api.post('/api/cart-items', {
+    await axios.post('/api/cart-items', {
       productId: product.id,
       quantity: quantity
     });
@@ -21,7 +22,7 @@ export function Product({ product, loadCart }) {
       <div className="product-container">
         <div className="product-image-container">
           <img className="product-image"
-            src={getImageUrl(product.image)} />
+            src={product.image} />
         </div>
 
         <div className="product-name limit-text-to-2-lines">
@@ -30,7 +31,7 @@ export function Product({ product, loadCart }) {
 
         <div className="product-rating-container">
           <img className="product-rating-stars"
-            src={getImageUrl(`images/ratings/rating-${product.rating.stars * 10}.png`)} />
+            src={`images/ratings/rating-${product.rating.stars * 10}.png`} />
           <div className="product-rating-count link-primary">
             {product.rating.count}
           </div>
@@ -58,7 +59,7 @@ export function Product({ product, loadCart }) {
         <div className="product-spacer"></div>
 
         <div className="added-to-cart">
-          <img src={getImageUrl('images/icons/checkmark.png')} />
+          <img src="images/icons/checkmark.png" />
           Added
         </div>
 

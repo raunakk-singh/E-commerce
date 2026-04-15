@@ -1,5 +1,3 @@
-import { getImageUrl } from '../../lib/api';
-
 export function CheckoutHeader(){
   return(
       <>
@@ -13,7 +11,7 @@ export function CheckoutHeader(){
                 </div>
       
                 <div className="checkout-header-right-section">
-                  <img src={getImageUrl('images/icons/checkout-lock-icon.png')} />
+                  <img src="images/icons/checkout-lock-icon.png" />
                 </div>
               </div>
             </div>
