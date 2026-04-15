@@ -26,14 +26,6 @@
   width: 200px;
 }
 
-.checkout-header .logo {
-  height: 26px;
-  margin-top: 0px;
-}
-
-.checkout-header .mobile-logo {
-  display: none;
-}
 
 /* @media is used to create responsive design (making the
    website look good on any screen size). This @media
@@ -41,16 +33,7 @@
    styles (inside the {...}) will be applied. */
 @media (max-width: 575px) {
   .checkout-header .checkout-header-left-section {
-    width: auto;
-  }
-
-  .checkout-header .logo {
-    display: none;
-  }
-
-  .checkout-header .mobile-logo {
-    display: inline-block;
-    height: 26px;
+    width: 32px;
   }
 }
 

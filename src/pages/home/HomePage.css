@@ -2,6 +2,14 @@
   margin-top: 60px;
 }
 
+.home-page .search-empty-state {
+  padding: 48px 24px 24px;
+  text-align: center;
+  color: rgb(8, 79, 45);
+  font-size: 18px;
+  font-weight: 500;
+}
+
 .home-page .products-grid {
   display: grid;
 

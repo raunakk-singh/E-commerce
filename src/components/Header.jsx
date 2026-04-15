@@ -1,35 +1,54 @@
-import { Link } from 'react-router';
+import { useEffect, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router';
 import './header.css';
 
 export function Header({cart = []}) {
+  const [searchText, setSearchText] = useState('');
+  const location = useLocation();
+  const navigate = useNavigate();
+
   let totalQuantity=0;
   cart.forEach((cartItem) => {
     totalQuantity+=cartItem.quantity;
   });
 
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    setSearchText(searchParams.get('search') ?? '');
+  }, [location.search]);
+
+  const handleSearchSubmit = (event) => {
+    event.preventDefault();
+
+    const trimmedSearch = searchText.trim();
+    const destination = trimmedSearch
+      ? `/?search=${encodeURIComponent(trimmedSearch)}`
+      : '/';
+
+    navigate(destination);
+  };
+
   return (
     <>
       <div className="header">
-        <div className="left-section">
-          <Link to="/" className="header-link">
-            <img className="logo"
-              src="images/logo-white.png" />
-            <img className="mobile-logo"
-              src="images/mobile-logo-white.png" />
-          </Link>
-        </div>
+        <div className="left-section" aria-hidden="true"></div>
 
-        <div className="middle-section">
-          <input className="search-bar" type="text" placeholder="Search" />
+        <form className="middle-section" onSubmit={handleSearchSubmit} role="search">
+          <input
+            className="search-bar"
+            type="text"
+            placeholder="Search"
+            value={searchText}
+            onChange={(event) => setSearchText(event.target.value)}
+          />
 
-          <button className="search-button">
+          <button className="search-button" type="submit">
             <img className="search-icon" src="images/icons/search-icon.png" />
           </button>
-        </div>
+        </form>
 
         <div className="right-section">
           <Link className="orders-link header-link" to="/orders">
-
             <span className="orders-text">Orders</span>
           </Link>
 

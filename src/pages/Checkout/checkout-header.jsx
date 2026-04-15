@@ -3,12 +3,7 @@ export function CheckoutHeader(){
       <>
        <div className="checkout-header">
               <div className="header-content">
-                <div className="checkout-header-left-section">
-                  <a href="/">
-                    <img className="logo" src="images/logo.png" />
-                    <img className="mobile-logo" src="images/mobile-logo.png" />
-                  </a>
-                </div>
+                <div className="checkout-header-left-section" aria-hidden="true"></div>
       
                 <div className="checkout-header-middle-section">
                   Checkout (<a className="return-to-home-link"
